@@ -1,4 +1,7 @@
 // components/VoiceAssistant.jsx
+// 
+
+// components/VoiceAssistant.jsx
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
@@ -6,7 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Mic, MicOff, MessageCircle, Bot, User, Download } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { downloadTranscript } from '@/utils/transcript'
-import { Conversation } from '@11labs/client'
+// import { Conversation } from '@11labs/client' //Commented out to avoid confusion with the other Conversation component
 import { getSignedUrl } from '@/app/actions/getSignedUrl'
 export default function VoiceAssistant() {
   const [conversation, setConversation] = useState(null)
@@ -32,35 +35,35 @@ export default function VoiceAssistant() {
       if (!signedUrl) {
         throw new Error('Failed to get signed URL')
       }
-      const conv = await Conversation.startSession({
-        // agentId: process.env.NEXT_PUBLIC_AGENT_ID,
-        signedUrl,
-        onMessage: (message) => {
-          console.log('message', message)
-          setMessages((prev) => [
-            ...prev,
-            {
-              source: message.source,
-              message: message.message,
-            },
-          ])
-        },
-        onError: (error) => {
-          console.error('Conversation error:', error)
-          setConnectionStatus('disconnected')
-        },
-        onStatusChange: (status) => {
-          console.log('Connection status:', status)
-          setConnectionStatus(
-            status.status === 'connected' ? 'connected' : 'disconnected'
-          )
-        },
-        onModeChange: (mode) => {
-          console.log('mode', mode)
-          setIsSpeaking(mode.mode === 'speaking')
-        },
-      })
-      setConversation(conv)
+      // const conv = await Conversation.startSession({ //Commented out to avoid confusion with the other Conversation component
+      //   // agentId: process.env.NEXT_PUBLIC_AGENT_ID,
+      //   signedUrl,
+      //   onMessage: (message) => {
+      //     console.log('message', message)
+      //     setMessages((prev) => [
+      //       ...prev,
+      //       {
+      //         source: message.source,
+      //         message: message.message,
+      //       },
+      //     ])
+      //   },
+      //   onError: (error) => {
+      //     console.error('Conversation error:', error)
+      //     setConnectionStatus('disconnected')
+      //   },
+      //   onStatusChange: (status) => {
+      //     console.log('Connection status:', status)
+      //     setConnectionStatus(
+      //       status.status === 'connected' ? 'connected' : 'disconnected'
+      //     )
+      //   },
+      //   onModeChange: (mode) => {
+      //     console.log('mode', mode)
+      //     setIsSpeaking(mode.mode === 'speaking')
+      //   },
+      // })
+      // setConversation(conv)
       setIsActive(true)
       setConnectionStatus('connected')
     } catch (error) {
@@ -71,7 +74,7 @@ export default function VoiceAssistant() {
 
   const endConversation = async () => {
     if (conversation) {
-      await conversation.endSession()
+      // await conversation.endSession() //Commented out to avoid confusion with the other Conversation component
       setConversation(null)
       setIsSpeaking(false)
       setIsActive(false)
